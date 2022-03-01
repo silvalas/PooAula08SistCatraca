@@ -4,16 +4,18 @@ import java.util.Date;
 
 public class RegEntSai {
 	
-	
+	private String numCracha;
 	private Date dataEnt;
 	private Date dataSai;
+	
 	
 
 	//Construtor padrão
 	public RegEntSai() {}
 
 	//Construtor com argumentos
-	public RegEntSai(Date dataEnt, Date dataSai) {
+	public RegEntSai(String numCracha, Date dataEnt, Date dataSai) {
+		this.numCracha = numCracha;
 		this.dataEnt = dataEnt;
 		this.dataSai = dataSai;
 	}
@@ -33,6 +35,14 @@ public class RegEntSai {
 
 	public void setDataSai(Date dataSai) {
 		this.dataSai = dataSai;
+	}
+
+	public String getNumCracha() {
+		return numCracha;
+	}
+
+	public void setNumCracha(String numCracha) {
+		this.numCracha = numCracha;
 	}
 	
 	

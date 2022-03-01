@@ -12,13 +12,12 @@ import br.com.fiap.aula08.HMap.util.Input;
 
 public class ExecutarCatracaMap {
 
+	
+	@SuppressWarnings("unchecked")
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		
 		RegEntSai registro = new RegEntSai(); 
-		
-		Map<String, Date> regEnt = new HashMap<String, Date>();
-		Map<String, Date> regSai = new HashMap<String, Date>();
 		
 		Map<String, RegEntSai > gravaEntSai = new HashMap<String, RegEntSai >();
 		
@@ -32,7 +31,7 @@ public class ExecutarCatracaMap {
 		
 		while (fim == null) {
 
-			tipo = Input.texto("Digite <E>ntrada ou <S>aida: ");
+			tipo = Input.texto("Digite <E>ntrada, <S>aida ou <R>elatório do dia: ");
 
 			if (tipo.equalsIgnoreCase("E")) {
 				cracha = Input.texto("Leitor cracha: ");
@@ -53,22 +52,38 @@ public class ExecutarCatracaMap {
 					Input.mensagem("Entrada NÃO registrada para esse crachá " + cracha + " - Acesso bloqueado para sair");
 				} else {
 					Input.mensagem("Obrigado pela visita " + cracha + " - " + formData.format(catraca.get(cracha)));
-					regEnt.put(cracha, catraca.get(cracha));
-					Date dataSai = new Date();
-					regSai.put(cracha, dataSai);
-					catraca.remove(cracha);
 					
-					//Inclui horário e entrada e saída na classe registro
+					//Inclui horário e entrada e saída na lista/classe registro
+					registro.setNumCracha(cracha);
 					registro.setDataEnt(catraca.get(cracha));
+					Date dataSai = new Date();
 					registro.setDataSai(dataSai);
-					gravaEntSai.put(cracha, registro);										
+					gravaEntSai.put(cracha, registro);	
 					
-					System.out.println("teste catraca chave = " + regEnt.keySet() + " data ent = " + formData.format(regEnt.get(cracha)) + " data sai = " + formData.format(regSai.get(cracha)));
-					System.out.println("Leitura  catraca chave = " + gravaEntSai.keySet() + " data ent = " + gravaEntSai.values());
-					
-					fim = "x";
-					
+					System.out.println("gravaEntSai Cracha = " + registro.getNumCracha() +
+									   " data ent = " + formData.format((registro.getDataEnt())) +
+									   " data sai = " + formData.format((registro.getDataSai())));
+
+					//Retira horário de entrada na lista catraca, após inclusão de dados na lista gravaEntSai
+					catraca.remove(cracha);
 				} // fim do if
+			} // fim do if
+			
+			if (tipo.equalsIgnoreCase("R")) {
+
+				for (Map.Entry item: gravaEntSai.entrySet()) {
+					RegEntSai teste = new RegEntSai();
+					String teste1 = (String) item.getKey();
+					teste = (RegEntSai) gravaEntSai.get(teste1);
+					//teste = (RegEntSai) item.getValue();
+				
+					System.out.println("Crachá 1 = " + item.getKey() + " / crachá 2 = " + teste.getNumCracha() + 
+									   " data ent = " + formData.format(teste.getDataEnt()) +
+									   " data sai = " + formData.format(teste.getDataSai()));
+	
+				} // fim do for 
+				
+				fim = "x";
 			} // fim do if
 
 			System.out.println(catraca.entrySet());
